@@ -1,16 +1,18 @@
 
+import Message from './components/Message';
 import './App.css';
+
 const stylesForWrapper = {
   padding: "20px",
   textAlign: "center",
 }
 
-function App(props) {
-  return (
-    <div className="messageWrapper" style={stylesForWrapper}>
-      <h1 className="title">Переданнный текст: <span style={{ fontStyle: "italic", color: "black" }}>{props.message}</span></h1>
-    </div>
-  );
+const messageText = "Now that we know how to render stuff, let's make our app a little more complex by introducing child elements. ";
+
+function App() {
+  return (<div className="messageWrapper" style={stylesForWrapper}>
+    <Message message={messageText} />
+  </div>)
 }
 
 export default App;
