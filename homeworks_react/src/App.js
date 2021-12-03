@@ -1,81 +1,92 @@
-
 import './App.css';
-
-import { useState, useCallback, useEffect, useMemo } from "react";
-import { useUsers } from './hooks/useUsers';
+import React, { useState, useEffect } from "react";
 
 
-const UserList = (props) => {
-  const [users, { addUser, removeUser }] = useUsers();
+const App = (props) => {
+  const [messageList, setMessageList] = useState([]);
+  const [text, setText] = useState('');
+  const [name, setName] = useState('');
 
-  useEffect(() => {
-    console.log('updated users', users);
-    props.onChange(users)
-  }, [users])
-
-  useEffect(() => {
-    if (users.length === 0) {
-      return;
-    }
-    const timerId = setTimeout(() => {
-      console.log('removed ->', users[0].name)
-      removeUser(users[0].name)()
-    }, 2000);
-    return () => {
-      clearTimeout(timerId);
-    }
-  }, [users])
-  return <div>
-    <button onClick={addUser}>Add</button>
-    <div>
-      {users.map((item) => <div>{item.name}<button onClick={removeUser(item.name)}>Remove</button></div>)
-      }
-    </div >
-  </div>
-}
-
-const NumbersList = () => {
-  const [numbers, setNumbers] = useState([])
-  const [value, setValue] = useState(0);
-  const sum = useMemo(() => numbers.reduce((acc, number) => acc + number, 0), [numbers])
-
-  const onChange = (event) => {
-    setValue(event.target.value)
+  const onChangeName = (event) => {
+    setName(event.target.value)
   }
+  const onChangeText = (event) => {
+    setText(event.target.value)
+  }
+
   const onSubmit = (event) => {
     event.preventDefault();
-    const copyNumbers = [...numbers];
-    copyNumbers.push(parseInt(value));
-    setNumbers(copyNumbers);
-    setValue(0);
+    sendMessage(name, text);
+    clearForm();
   }
-  return <form onSubmit={onSubmit} action=''>
-    <h1>sum:{sum}</h1>
-    <input type="number" onChange={onChange} value={value} />
-    <button type="submit">save</button>
-  </form>
-}
 
-function App(props) {
-  const [state, setState] = useState([])
+  const sendMessage = (author, message) => {
+    const copyMessageList = [...messageList];
+    copyMessageList.name = author;
+    copyMessageList.text = message;
+    copyMessageList.push({
+      name: copyMessageList.name,
+      text: copyMessageList.text
+    })
+    setMessageList(copyMessageList);
+  }
+  const clearForm = () => {
+    setName('');
+    setText('')
+  }
 
   useEffect(() => {
-    console.log('updated');
-  })
-  useEffect(() => {
-    console.log('mounted');
-  }, [])
-  useEffect(() => {
-    console.log('update State', state);
-  }, [state])
+    const objectToCheck = messageList[messageList.length - 1];
+    if (messageList.length === 0) {
+      return
+    }
+    else if (objectToCheck.name === "Чат-бот") {
+      return
+    } else {
+      const timerBot = setTimeout(() => {
+        sendMessage("Чат-бот", `Привет ${objectToCheck.name}`)
+      }, 2000);
+      return () => {
+        clearTimeout(timerBot);
+      }
+    }
+  }, [messageList]);
 
-  return (
-    <div className="App">
-      <NumbersList />
-      <UserList onChange={(users) => {
-        console.log('', users)
-      }} />
+
+  return (<div className="App">
+    <div className="wrapper">
+      <form onSubmit={onSubmit} action=''>
+        <div className="formWrapper">
+          <input placeholder="Имя" type="text" onChange={onChangeName} value={name} />
+          <input type="text" placeholder="Сообщение" onChange={onChangeText} value={text} />
+          <button type="submit">Отправить</button>
+        </div>
+      </form>
+      <div >
+        {messageList.map((message) => {
+          return <div className="messageBlock"><h3>{message.name}</h3><p>{message.text}</p></div>
+        })}
+      </div>
     </div>
-  );
+
+
+  </div>)
 }
-export default App;
+
+export default App
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
