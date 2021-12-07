@@ -1,11 +1,22 @@
 import './App.css';
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
+import { TextField, Button, } from '@material-ui/core';
+// import { nanoid } from 'nanoid';
+import { ChatList } from './components/ChatList';
 
 
 const App = (props) => {
   const [messageList, setMessageList] = useState([]);
   const [text, setText] = useState('');
   const [name, setName] = useState('');
+  
+  const inputNameRef = useRef(null);
+
+
+  useEffect((name) => {
+    inputNameRef.current.focus();
+
+  }, [name])
 
   const onChangeName = (event) => {
     setName(event.target.value)
@@ -20,16 +31,17 @@ const App = (props) => {
     clearForm();
   }
 
-  const sendMessage = (author, message) => {
-    const copyMessageList = [...messageList];
-    copyMessageList.name = author;
-    copyMessageList.text = message;
+
+  const sendMessage = useCallback((author, message) => {
+    const copyMessageList = [...messageList]
     copyMessageList.push({
-      name: copyMessageList.name,
-      text: copyMessageList.text
+      name: author,
+      text: message
     })
     setMessageList(copyMessageList);
-  }
+  }, [messageList]);
+
+
   const clearForm = () => {
     setName('');
     setText('')
@@ -50,25 +62,38 @@ const App = (props) => {
         clearTimeout(timerBot);
       }
     }
-  }, [messageList]);
+  }, [messageList, sendMessage]);
 
 
   return (<div className="App">
     <div className="wrapper">
       <form onSubmit={onSubmit} action=''>
         <div className="formWrapper">
-          <input placeholder="Имя" type="text" onChange={onChangeName} value={name} />
-          <input type="text" placeholder="Сообщение" onChange={onChangeText} value={text} />
-          <button type="submit">Отправить</button>
+          <TextField id="outlined-name" label="Имя" variant="outlined" required onChange={onChangeName} value={name} className="input" margin="normal"
+            inputRef={inputNameRef}
+          />
+
+          <TextField id="outlined-text" label="Сообщение" variant="outlined" required onChange={onChangeText} value={text} className="input" margin="normal"
+          />
+          <Button variant="contained" type="submit" color="secondary">Отправить</Button>
+
         </div>
       </form>
-      <div >
-        {messageList.map((message) => {
-          return <div className="messageBlock"><h3>{message.name}</h3><p>{message.text}</p></div>
-        })}
+      <div className="messageField">
+        <ChatList />
+        <ul className="messageBlock">
+
+          {/* {messageList.map((message) => {
+          return <li key={nanoid(6)}><h3>{message.name}</h3><p>{message.text}</p></li>
+        })} */}
+
+          {messageList.map((message, index) => {
+            return <li key={index}><h3>{message.name}</h3><p>{message.text}</p></li>
+          })}
+        </ul>
+
       </div>
     </div>
-
 
   </div>)
 }

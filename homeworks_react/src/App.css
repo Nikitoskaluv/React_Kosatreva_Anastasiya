@@ -1,9 +1,4 @@
-.messageBlock{
-    display: flex;
-    flex-direction: row;
-    align-items: baseline;
-    justify-content: center;
-}
+
 
 .App{
   width:100%
@@ -13,14 +8,21 @@ width:1140px;
 margin: 0 auto;
 padding:70px
 }
-input{
+.input{
   width:50%;
-  margin: 0 auto;
-  height: 30px;
-  margin-bottom: 15px;
- 
-  
 }
+  
+ ul {
+  list-style-type: none;
+  
+ }
+  li{
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: center;
+  }
+
 .formWrapper{
 display: flex;
 flex-direction: column;
@@ -32,4 +34,11 @@ button{
 }
 p{
   margin-left: 10px;
+}
+.messageField{
+  display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+   
+
 }
