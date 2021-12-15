@@ -1,37 +1,36 @@
 import { List, ListItem, ListItemText } from '@material-ui/core';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-export const ChatList = () => {
-    const chats = [
-        {
-            name: "Chat1",
-            id: "1"
-        },
-        {
-            name: "Chat2",
-            id: "2"
-        },
-        {
-            name: "Chat3",
-            id: "3"
-        },
-        {
-            name: "Chat4",
-            id: "4"
-        },
-    ];
+
+export const ChatList = ({ chats }) => {
 
     return (
         <List >
             {chats.map((chat) => {
                 return (
+
                     <ListItem
-                        key={chat.id}>
-                        <ListItemText primary={chat.name}>
-                        </ListItemText>
+                        key={chat.id}  >
+                        <Link to={`/chats/${chat.id}`} style={{
+                            textDecoration: 'none',
+                            color: "Black"
+                        }}>
+                            <ListItemText primary={chat.name}>
+                            </ListItemText>
+                        </Link>
                     </ListItem>
+
+
                 )
             })}
         </List>
+
     );
 }
+
+
+
+
+
+

@@ -1,104 +1,34 @@
 import './App.css';
-import React, { useState, useEffect, useCallback, useRef } from "react";
-import { TextField, Button, } from '@material-ui/core';
-// import { nanoid } from 'nanoid';
-import { ChatList } from './components/ChatList';
+
+import Layout from './components/Layout';
+import Chats from './routes/Chats/Chats';
+import Home from './routes/Home/Home';
+import NotFound from './routes/NotFound/NotFound';
+import Profile from './routes/Profile/Profile';
 
 
-const App = (props) => {
-  const [messageList, setMessageList] = useState([]);
-  const [text, setText] = useState('');
-  const [name, setName] = useState('');
-  
-  const inputNameRef = useRef(null);
+import { Switch } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
 
-  useEffect((name) => {
-    inputNameRef.current.focus();
-
-  }, [name])
-
-  const onChangeName = (event) => {
-    setName(event.target.value)
-  }
-  const onChangeText = (event) => {
-    setText(event.target.value)
-  }
-
-  const onSubmit = (event) => {
-    event.preventDefault();
-    sendMessage(name, text);
-    clearForm();
-  }
 
 
-  const sendMessage = useCallback((author, message) => {
-    const copyMessageList = [...messageList]
-    copyMessageList.push({
-      name: author,
-      text: message
-    })
-    setMessageList(copyMessageList);
-  }, [messageList]);
+const App = () => {
 
 
-  const clearForm = () => {
-    setName('');
-    setText('')
-  }
-
-  useEffect(() => {
-    const objectToCheck = messageList[messageList.length - 1];
-    if (messageList.length === 0) {
-      return
-    }
-    else if (objectToCheck.name === "Чат-бот") {
-      return
-    } else {
-      const timerBot = setTimeout(() => {
-        sendMessage("Чат-бот", `Привет ${objectToCheck.name}`)
-      }, 2000);
-      return () => {
-        clearTimeout(timerBot);
-      }
-    }
-  }, [messageList, sendMessage]);
-
-
-  return (<div className="App">
-    <div className="wrapper">
-      <form onSubmit={onSubmit} action=''>
-        <div className="formWrapper">
-          <TextField id="outlined-name" label="Имя" variant="outlined" required onChange={onChangeName} value={name} className="input" margin="normal"
-            inputRef={inputNameRef}
-          />
-
-          <TextField id="outlined-text" label="Сообщение" variant="outlined" required onChange={onChangeText} value={text} className="input" margin="normal"
-          />
-          <Button variant="contained" type="submit" color="secondary">Отправить</Button>
-
-        </div>
-      </form>
-      <div className="messageField">
-        <ChatList />
-        <ul className="messageBlock">
-
-          {/* {messageList.map((message) => {
-          return <li key={nanoid(6)}><h3>{message.name}</h3><p>{message.text}</p></li>
-        })} */}
-
-          {messageList.map((message, index) => {
-            return <li key={index}><h3>{message.name}</h3><p>{message.text}</p></li>
-          })}
-        </ul>
-
-      </div>
-    </div>
-
-  </div>)
+  return (
+    <Layout>
+      <Switch>
+        <Route component={Profile} path="/profile" />
+        <Route component={Home} exact path="/" />
+        <Route component={Chats} path="/chats" ></Route>
+        <Route component={NotFound} path="*" />
+      </Switch>
+    </Layout>
+  )
 }
 
-export default App
+export default App;
 
 
 
