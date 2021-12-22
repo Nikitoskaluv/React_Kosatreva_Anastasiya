@@ -4,7 +4,7 @@ import { IS_SHOW_NAME } from "../../store/profile/actions";
 
 
 export const Profile = () => {
-    const isShowName = useSelector(state => state.isShowName);
+    const { isShowName, name } = useSelector(state => state);
     const dispatch = useDispatch();
 
     const onChangeCheckbox = () => {
@@ -23,6 +23,7 @@ export const Profile = () => {
                     onChange={onChangeCheckbox}
                 />
             </label>
+            {isShowName && <div>{name}</div>}
         </div>)
 
 }
