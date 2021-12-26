@@ -1,35 +1,20 @@
-import React, { useState } from "react";
+import React from "react";
 import { ChatList } from "../../components/ChatList";
 import { Route, Switch } from "react-router";
 import MessagesFromChat from "../../components/MessagesFromChat";
-import { nanoid } from 'nanoid';
+import { useSelector } from 'react-redux';
+import { getChatList } from '../../store/chats/selectors';
+// import { setChat } from '../../store/chats/actions';
 
 
-
-let initialChats = [];
-
-const createChat = (i) => ({
-    id: nanoid(4),
-    name: `Chat ${i}`,
-    title: `Сообщения из чата ${i}`
-})
-
-for (let i = 1; i <= 7; i++) {
-    initialChats[i] = createChat(i);
-    console.log(initialChats[i].id)
-}
 
 const Chats = () => {
-
-    const [chats, setChats] = useState(initialChats);
-
+    const chats = useSelector(getChatList);
     return (
         <div className="App">
             <ChatList chats={chats} />
             <Switch>
-                <Route render={(props) => (
-                    <MessagesFromChat {...props} chats={chats} />
-                )} exact path="/chats/:chatId" />
+                <Route component={MessagesFromChat} exact path="/chats/:chatId" />
             </Switch>
         </div>
     )

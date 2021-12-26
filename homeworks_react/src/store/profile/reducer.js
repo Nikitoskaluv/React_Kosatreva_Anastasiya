@@ -1,4 +1,4 @@
-import { IS_SHOW_NAME } from "./actions";
+import { IS_SHOW_NAME, CHANGE_NAME } from "./actions";
 const initialState = {
     name: '*',
     isShowName: false
@@ -9,7 +9,12 @@ export const profileReducer = (state = initialState, action) => {
         case IS_SHOW_NAME:
             return {
                 ...state,
-                isShowName: !state.isShowName
+                isShowName: action.payload,
+            }
+        case CHANGE_NAME:
+            return {
+                ...state,
+                name: action.payload
             }
         default:
             return state;

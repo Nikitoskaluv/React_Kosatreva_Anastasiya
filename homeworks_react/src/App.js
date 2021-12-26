@@ -6,7 +6,6 @@ import Home from './routes/Home/Home';
 import NotFound from './routes/NotFound/NotFound';
 import { Profile } from './routes/Profile/Profile';
 
-
 import { Switch } from 'react-router-dom';
 import { Route } from 'react-router-dom';
 
