@@ -37,7 +37,6 @@ export const ChatList = ({ chats }) => {
                 marginLeft: '20px'
             }}
                 onClick={(ev) => createNewChat(ev)}>
-
                 Добавить Чат
             </Button>
             <List >

@@ -8,7 +8,9 @@ import reportWebVitals from './reportWebVitals';
 import { ThemeProvider } from '@material-ui/core';
 import { createTheme } from '@material-ui/core';
 import { store } from './store';
-
+import { persistor } from './store';
+import { PersistGate } from 'redux-persist/integration/react';
+import { CircularProgress } from '@material-ui/core';
 
 const theme = createTheme({
   palette: {
@@ -26,7 +28,9 @@ ReactDOM.render(
   <BrowserRouter>
     <ThemeProvider theme={theme}>
       <Provider store={store}>
-        <App />
+        <PersistGate persistor={persistor} loading={<CircularProgress />}>
+          <App />
+        </PersistGate>
       </Provider>
     </ThemeProvider>
   </BrowserRouter>

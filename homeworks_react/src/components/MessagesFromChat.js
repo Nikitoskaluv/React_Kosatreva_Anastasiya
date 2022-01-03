@@ -5,10 +5,15 @@ import { useParams } from "react-router";
 import { useSelector } from "react-redux";
 import { getMessageListFromChats } from '../store/messages/selectors';
 import { useDispatch } from "react-redux";
-import { addMessage } from "../store/messages/actions";
+import { addMessageWithThunk } from "../store/messages/actions";
 import { MessagesRender } from "./MessagesRender";
 import { nanoid } from 'nanoid';
 
+export const createMessage = (name, text) => ({
+    author: name,
+    message: text,
+    id: nanoid(4),
+})
 export const MessagesFromChat = () => {
     const { chatId } = useParams();
     const [text, setText] = useState('');
@@ -16,7 +21,6 @@ export const MessagesFromChat = () => {
     const dispatch = useDispatch();
     const messagesFromChat = useSelector(getMessageListFromChats);
     const messagesForRender = messagesFromChat[chatId];
-
 
 
 
@@ -39,15 +43,14 @@ export const MessagesFromChat = () => {
     }
 
 
+    // const sendMessage = (author, message) => {
+    //     const newMessage = createMessage(author, message);
+    //     dispatch(addMessage(newMessage, chatId))
+    // }
     const sendMessage = (author, message) => {
-        const newMessage = {
-            author,
-            message,
-            id: nanoid(4),
-
-        };
-        dispatch(addMessage(newMessage, chatId))
+        dispatch(addMessageWithThunk(chatId, message, author))
     }
+
 
     const clearForm = () => {
         setName('');
@@ -75,6 +78,9 @@ export const MessagesFromChat = () => {
     // if (!chats.find((ch) => ch && ch.id === chatId)) {
     //     return <Redirect to='/chats' />
     // }
+
+
+
 
     return (
         <div className="wrapper">

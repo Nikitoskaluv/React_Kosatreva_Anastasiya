@@ -10,6 +10,7 @@ import { getChatList } from '../../store/chats/selectors';
 
 const Chats = () => {
     const chats = useSelector(getChatList);
+
     return (
         <div className="App">
             <ChatList chats={chats} />
