@@ -1,0 +1,72 @@
+
+
+.App{
+  width:100%;
+  display:  flex-start;
+    align-items: center;
+}
+.wrapper{
+width:1140px;
+margin: 0 auto;
+padding:70px
+}
+.input{
+  width:50%;
+}
+  
+ ul {
+  list-style-type: none;
+  
+ }
+  li{
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: center;
+  }
+
+.formWrapper{
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+button{
+  width:20%;
+  height: 30px;
+}
+p{
+  margin-left: 10px;
+}
+.messageField{
+  display: flex;
+    flex-direction: row;
+    justify-content: center;
+   
+
+}
+.linkBox{
+display: flex;
+flex-direction: row;
+justify-content: space-evenly;
+}
+.profile_wrapper{
+  display: flex;
+  flex-direction: column;
+  margin-left: 30px;
+}
+.profile_wrapper div,
+.profile_wrapper button,
+.profile_wrapper label
+{
+  margin-top: 30px;
+}
+.profile_wrapper input{
+  margin-left: 10px;
+}
+.MuiListItem-root {
+  justify-content: space-between;
+}
+.fieldNoMessage{
+  text-align: center;
+  margin-top: 25px;
+}
