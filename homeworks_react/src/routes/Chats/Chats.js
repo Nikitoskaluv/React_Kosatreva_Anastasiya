@@ -1,9 +1,9 @@
 import React from "react";
-import { ChatList } from "../../components/ChatList";
 import { Route, Switch } from "react-router";
 import MessagesFromChat from "../../components/MessagesFromChat";
 import { useSelector } from 'react-redux';
 import { getChatList } from '../../store/chats/selectors';
+import { ChatListContainer } from "../../components/ChatListContainer";
 // import { setChat } from '../../store/chats/actions';
 
 
@@ -13,7 +13,7 @@ const Chats = () => {
 
     return (
         <div className="App">
-            <ChatList chats={chats} />
+            <ChatListContainer chats={chats} />
             <Switch>
                 <Route component={MessagesFromChat} exact path="/chats/:chatId" />
             </Switch>

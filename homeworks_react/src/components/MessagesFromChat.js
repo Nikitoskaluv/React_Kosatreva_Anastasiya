@@ -23,7 +23,6 @@ export const MessagesFromChat = () => {
     const messagesForRender = messagesFromChat[chatId];
 
 
-
     const inputNameRef = useRef(null);
     useEffect((name) => {
         inputNameRef.current && inputNameRef.current.focus();
@@ -42,11 +41,6 @@ export const MessagesFromChat = () => {
         clearForm();
     }
 
-
-    // const sendMessage = (author, message) => {
-    //     const newMessage = createMessage(author, message);
-    //     dispatch(addMessage(newMessage, chatId))
-    // }
     const sendMessage = (author, message) => {
         dispatch(addMessageWithThunk(chatId, message, author))
     }
@@ -57,31 +51,6 @@ export const MessagesFromChat = () => {
         setText('')
     }
 
-    // useEffect(() => {
-    //     const objectToCheck = messageList[messageList.length - 1];
-    //     if (messageList.length === 0) {
-    //         return
-    //     }
-    //     else if (objectToCheck.name === "Чат-бот") {
-    //         return
-    //     } else {
-    //         const timerBot = setTimeout(() => {
-    //             sendMessage("Чат-бот", `Привет ${objectToCheck.name}`)
-    //         }, 2000);
-    //         return () => {
-    //             clearTimeout(timerBot);
-    //         }
-    //     }
-    // }, [messageList, sendMessage]);
-
-
-    // if (!chats.find((ch) => ch && ch.id === chatId)) {
-    //     return <Redirect to='/chats' />
-    // }
-
-
-
-
     return (
         <div className="wrapper">
             <form onSubmit={onSubmit} action=''>
@@ -89,7 +58,6 @@ export const MessagesFromChat = () => {
                     <TextField id="outlined-name" label="Имя" variant="outlined" required onChange={onChangeName} value={name} className="input" margin="normal"
                         inputRef={inputNameRef}
                     />
-
                     <TextField id="outlined-text" label="Сообщение" variant="outlined" required onChange={onChangeText} value={text} className="input" margin="normal"
                     />
                     <Button variant="contained" type="submit" color="secondary">Отправить</Button>
@@ -98,7 +66,5 @@ export const MessagesFromChat = () => {
             <MessagesRender list={messagesForRender} />
         </div>)
 }
-
-
 export default MessagesFromChat;
 
