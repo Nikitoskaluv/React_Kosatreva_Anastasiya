@@ -70,3 +70,16 @@ justify-content: space-evenly;
   text-align: center;
   margin-top: 25px;
 }
+.newsContainer{
+  display: flex;
+  flex-direction: column;
+  width:50%;
+  margin-left: 30px;
+}
+.newsContainer li{
+  display: flex;
+  flex-direction: column;
+}
+.newsContainer p{
+  margin: 0 0 50px 0;
+}

@@ -19,7 +19,10 @@ const theme = createTheme({
     },
     secondary: {
       main: "#81c784",
-    }
+    },
+    error: {
+      main: "#d32f2f",
+    },
   }
 })
 

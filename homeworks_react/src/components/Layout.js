@@ -19,6 +19,10 @@ const navigation = [
     {
         path: '/chats',
         title: 'Chats',
+    },
+    {
+        path: '/news',
+        title: 'News',
     }
 
 ]
