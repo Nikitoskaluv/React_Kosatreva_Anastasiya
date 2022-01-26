@@ -3,7 +3,6 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 
 
@@ -23,7 +22,17 @@ const navigation = [
     {
         path: '/news',
         title: 'News',
-    }
+    },
+    {
+        path: '/signup',
+        title: 'Registration'
+    },
+    {
+        path: '/login',
+        title: 'LOGIN'
+    },
+
+
 
 ]
 
@@ -42,7 +51,6 @@ export default function Layout({ children }) {
                             })}
                         </div>
                     </Typography>
-                    <Button color="inherit">Log in</Button>
                 </Toolbar>
             </AppBar>
             <div>{children}</div>

@@ -1,39 +1,38 @@
-import { deleteChat, addChat } from '../store/chats/actions';
+import { addChatWithThunk, deleteChatWithThunk, offTrackingAddChat, offTrackingDeleteChat, onTrackingAddChat, onTrackingDeleteChat } from '../store/chats/actions';
 import { useDispatch } from 'react-redux';
-import { getLastChat, getChats } from '../store/chats/selectors';
-import { useSelector } from 'react-redux';
-import { removeMessagesById } from '../store/messages/actions';
 import { ChatList } from './ChatList';
+import { useCallback, useEffect } from 'react';
 
 
 
 export const ChatListContainer = ({ chats }) => {
     const dispatch = useDispatch();
-    const lastChat = useSelector(getLastChat);
-    console.log(lastChat);
-
-    const smt = useSelector(getChats);
-    console.log(smt);
 
 
+    const removeChat = useCallback((e, chatId) => {
+        dispatch(deleteChatWithThunk(chatId));
+    }, [])
 
-    const removeChat = (e, chatId) => {
-        dispatch(deleteChat(chatId));
-        dispatch(removeMessagesById(chatId));
-    }
-
-
-    const createNewChat = () => {
-        let lastChatId = +lastChat.id
-        const chatName = `Чат ${lastChatId + 1}`
-        const newChat = {
-            id: lastChatId + 1,
-            name: chatName
+    useEffect(() => {
+        dispatch(onTrackingAddChat);
+        dispatch(onTrackingDeleteChat);
+        return () => {
+            dispatch(offTrackingAddChat);
+            dispatch(offTrackingDeleteChat)
         }
+    }, [])
 
-        dispatch(addChat(newChat));
-    }
+
+    const createNewChat = useCallback(() => {
+        const newChat = {
+            name: `chat ${chats.length + 1}`,
+            messages: {}
+        }
+        dispatch(addChatWithThunk(newChat));
+    }, [chats])
+
     return (
+
         <ChatList
             removeChat={removeChat}
             createNewChat={createNewChat}

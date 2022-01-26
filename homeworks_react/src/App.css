@@ -83,3 +83,15 @@ justify-content: space-evenly;
 .newsContainer p{
   margin: 0 0 50px 0;
 }
+.home_container,
+.registration_container{
+  margin-left: 30px;
+}
+.css-13r4j3i {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.registration_container h1{
+  text-align:center;
+}

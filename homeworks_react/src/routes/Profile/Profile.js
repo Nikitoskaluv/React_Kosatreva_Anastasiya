@@ -1,14 +1,15 @@
 import React, { useCallback, useState } from "react";
 import { useSelector, useDispatch } from 'react-redux'
 import { showName, changeName } from "../../store/profile/actions";
-import { getName, getShowName } from "../../store/profile/selectors";
+import { getUser, getShowName } from "../../store/profile/selectors";
+
+
 
 
 export const Profile = () => {
-    const name = useSelector(getName);
+    const user = useSelector(getUser);
     const isShowName = useSelector(getShowName);
 
-    // const { isShowName, name } = useSelector(state => state);
     const dispatch = useDispatch();
     const [value, setValue] = useState('');
 
@@ -32,20 +33,30 @@ export const Profile = () => {
 
             <label>Отображать имя
                 <input
+
                     type="checkbox"
                     checked={isShowName}
                     onChange={setShowName}
                 />
             </label>
-            {isShowName && <div>{name}</div>}
+            {isShowName && <div>{user?.email}</div>}
             <label>Введите имя
                 <input
+                    label="Name"
                     type="text"
                     value={value}
                     onChange={handleChange}
                 />
             </label>
             <button onClick={setName}>Подтвердить</button>
-        </div>)
+            <div>
+                <h1>Profile</h1>
+
+            </div>
+        </div>
+    )
 
 }
+
+
+

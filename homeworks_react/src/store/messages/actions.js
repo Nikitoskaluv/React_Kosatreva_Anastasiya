@@ -1,28 +1,45 @@
-import { createMessage } from "../../components/MessagesFromChat";
-export const ADD_MESSAGE = 'MESSAGES:ADD_MESSAGE';
+import { chatsRef, messagesRef } from "../../services/firebase";
+
+
+export const ADD_MESSAGES = 'MESSAGES:ADD_MESSAGES';
 export const REMOVE_MESSAGES_BY_ID = 'MESSAGES:REMOVE_MESSAGES_BY_ID';
 
 
-export const addMessage = (message, chatId) => ({
-    type: ADD_MESSAGE,
+export const addMessages = (messages, chatId) => ({
+    type: ADD_MESSAGES,
     payload: {
-        message,
+        messages,
         chatId,
     }
 })
 
-export const removeMessagesById = (chatId) => ({
+export const removeMessagesByChatId = (chatId) => ({
     type: REMOVE_MESSAGES_BY_ID,
     payload: {
         chatId
     }
 })
 
-export const addMessageWithThunk = (chatId, message, author) => (dispatch) => {
-    const newMessage = createMessage(author, message);
-    dispatch(addMessage(newMessage, chatId));
-    if (newMessage.author !== "Чат-бот") {
-        const botMessage = createMessage("Чат-бот", `Привет ${newMessage.author}`)
-        setTimeout(() => dispatch(addMessage(botMessage, chatId)), 2000);
-    }
+export const addMessageWithThunk = (chatId, message) => () => {
+    chatsRef.child(chatId).child('messages').push(message);
+}
+
+export const onTrackingAddMessageWithThunk = (chatId) => (dispatch) => {
+    chatsRef.on('child_changed', (snapshot) => {
+        console.log('messages from firebase', snapshot.val().messages, 'chatId', snapshot.key)
+        dispatch(addMessages(snapshot.val().messages, snapshot.key))
+    })
+}
+
+export const offTrackingAddMessageWithThunk = (chatId) => () => {
+    messagesRef.child(chatId).child('messages').off()
+}
+
+export const onTrackingRemoveMessageWithThunk = (chatId) => (dispatch) => {
+    messagesRef.child(chatId).child('messages').on('child_removed', (snapshot) => {
+        dispatch(removeMessagesByChatId(chatId))
+    })
+}
+export const offTrackingRemoveMessageWithThunk = (chatId) => () => {
+    messagesRef.child(chatId).child('messages').off()
 }

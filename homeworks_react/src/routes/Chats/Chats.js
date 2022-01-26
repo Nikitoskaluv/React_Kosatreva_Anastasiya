@@ -4,7 +4,6 @@ import MessagesFromChat from "../../components/MessagesFromChat";
 import { useSelector } from 'react-redux';
 import { getChatList } from '../../store/chats/selectors';
 import { ChatListContainer } from "../../components/ChatListContainer";
-// import { setChat } from '../../store/chats/actions';
 
 
 

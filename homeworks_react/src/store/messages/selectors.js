@@ -1,4 +1,5 @@
-export const getMessages = (state) => state.messages;
 
-export const getMessageListFromChats = (state) => getMessages(state).messageList;
+export const getMessageListFromChat = chatId => state => {
+    return state.chats.chatList.filter(ch => ch.id === chatId)[0].messages
+};
 
